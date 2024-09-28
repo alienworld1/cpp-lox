@@ -8,6 +8,10 @@ using namespace std;
 void runFile(const string& path);
 void runPrompt();
 void run(const string& source);
+void error(int line, const string& message);
+void report(int line, const string& where, const string& message);
+
+static bool hadError = false;
 
 int main(int argc, const char** argv) {
     if (argc > 2) {
@@ -33,6 +37,10 @@ void runFile(const string& path) {
   string content = buffer.str();
 
   run(content);
+
+  if (hadError) {
+    exit(65);
+  }
 }
 
 void runPrompt() {
@@ -44,10 +52,20 @@ void runPrompt() {
       break;
     }
     run(line);
+    hadError = false;
   }
   
 }
 
 void run(const string& source) {
   cout << "code = " << source << endl;
+}
+
+void error(int line, const string& message) {
+  report(line, "", message);
+}
+
+void report(int line, const string& where, const string& message) {
+  cerr << "[line " << line << "] Error" << where << ": " << message << endl;
+  hadError = true; 
 }
