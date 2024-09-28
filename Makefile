@@ -6,7 +6,9 @@ CXXFLAGS = -Wall -std=c++11
 TARGET = cpplox
 
 # Source files
-SRCS = lox/Lox.cpp
+SRCS = \
+	lox/Lox.cpp \
+	lox/token.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
